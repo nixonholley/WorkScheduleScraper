@@ -1,10 +1,11 @@
-from tkinter.filedialog import askopenfilename
 from utils import parse_csv, convert_to_start_end_time, create_ics
 from pprint import pprint
+from dotenv import load_dotenv
+import os
 
 def scraper():
-    # Open Finder and select a file
-    filepath = './schedule.csv'
+    load_dotenv()
+    filepath = os.getenv('FILEPATH')
 
     # Parse csv into {'2/10': [{'time': '3:30- 4:30'}, ...],...}
     schedule_raw = parse_csv(filepath)

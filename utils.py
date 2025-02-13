@@ -2,6 +2,8 @@ import pandas as pd
 from datetime import datetime
 from ics import Calendar, Event
 import pytz
+from dotenv import load_dotenv
+import os
 
 def parse_csv(filepath : str) -> dict:
     # Load the CSV file into a DataFrame (ensure header is None as we don't want it to interpret the first row as header)
@@ -25,14 +27,16 @@ def parse_csv(filepath : str) -> dict:
     # Step 4: Iterate through the DataFrame starting from the second row (excluding header)
     for index, row in df.iloc[1:].iterrows():
         time_slot = None
-        
+
+        load_dotenv()
+        name = os.getenv('NAME')
         # Check if this row is a time row (from our time_rows list)
         if index in time_rows:
             time_slot = df.iloc[index, 0]  # Get the time slot for the row
             
         # Look for any names (like 'Nixon') in the row
         for col_idx, cell in enumerate(row):
-            if isinstance(cell, str) and 'Nixon' in cell:  # Adjust based on the name you're searching for
+            if isinstance(cell, str) and name in cell:  # Adjust based on the name you're searching for
                 # Find the closest column to the left with a date
                 for prev_col in range(col_idx, -1, -1):
                     if prev_col in date_columns:

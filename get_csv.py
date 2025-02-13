@@ -8,6 +8,7 @@ def get_csv():
 
     # Get the Google Sheets URL from the environment variable
     google_sheet_url = os.getenv('GOOGLE_SHEET_URL')
+    filepath = os.getenv('FILEPATH')
 
     if google_sheet_url:
         # Send GET request to download the CSV
@@ -16,7 +17,7 @@ def get_csv():
         # Check if the request was successful
         if response.status_code == 200:
             # Save the CSV to a file
-            with open('schedule.csv', 'wb') as file:
+            with open(filepath, 'wb') as file:
                 file.write(response.content)
             print("CSV downloaded successfully!")
         else:
