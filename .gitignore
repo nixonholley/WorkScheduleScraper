@@ -1,1 +1,4 @@
 *.ics
+.env
+*.csv
+*.DS_Store
